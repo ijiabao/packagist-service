@@ -10,7 +10,43 @@
   > [webhooks](https://developer.github.com/webhooks/) or
   > [GitHub Apps](https://developer.github.com/apps/differences-between-apps/#about-github-apps/).
 
-* 此为`webhook`解决方案，在托管的`github`项目里设置: `settings / Webhooks / add webhook` 进行添加钩子，在Push或自定义事件时，会 Post 一个目标 URL 执行操作，通过此 URL 进行更新
+* 新的自动更新方法
+
+  > 参见: https://packagist.org/about#how-to-update-packages
+
+  - 退出登录(github, packagist)
+
+  - 登录packagist, 使用 github OAuth登录(第三方登录), 并开启所有权限
+
+  - 进入profile页 https://packagist.org/profile/
+
+  - 页面有显示 GitHub Hook Sync 和时间, 表示成功,以后github更新时,会自动推送到packagist.
+
+    另可点击 "retry hook sync" 对你的github进行同步挂钩 (为github项目添加webhook). 
+
+    ```
+    GitHub Hook Sync
+    
+    Completed at 2018-10-17 02:51:29 UTC, retry hook sync.
+    0 hooks setup/updated
+    0 hooks already setup and left unchanged
+    ```
+
+  - 她的原理获得权限,在你的github项目里添加一个 webhook,  当PUSH代码时告之`packagist`进行更新
+
+    可查看你的github项目=> settings => Webhooks , 如果有packagist.org/api/github, 则表示成功.
+
+    ```
+    Webhooks
+    
+    Webhooks allow external services to be notified when certain events happen. When the specified events happen, we’ll send a POST request to each of the URLs you provide. Learn more in our Webhooks Guide.
+    
+    https://packagist.org/api/github (push)
+    ```
+
+* 本文为webhook demo, 基于github api, 能实现同样效果,供参考
+
+* 在托管的`github`项目里设置: `settings / Webhooks / add webhook` 进行添加钩子，在Push或自定义事件时，会 Post 一个目标 URL 执行操作，通过此 URL 进行更新
 
 * 把本项目中的`packagist-service.php`放在你的网站上，保证可访问即可。例如：http://www.jurlu.com/packagist-service.php
 
